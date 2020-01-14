@@ -1,7 +1,7 @@
 ----------------------------------------------------------------
-Tue Jan 14 17:53:32 CET 2020:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.13.1.1 - (1765088): instance a816c00e-016f-a4f9-7fbb-000006b1bcb0 
-on database directory C:\Users\Bruger\Desktop\Ransomware-master\RansomDB with class loader sun.misc.Launcher$AppClassLoader@18b4aac2 
+Tue Jan 14 21:01:58 CET 2020:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.13.1.1 - (1765088): instance a816c00e-016f-a5a6-023d-000006b1a808 
+on database directory C:\Users\Bruger\Desktop\Ransomware-master\Ransom_DB with class loader sun.misc.Launcher$AppClassLoader@18b4aac2 
 Loaded from file:/C:/Users/Bruger/.m2/repository/org/apache/derby/derby/10.13.1.1/derby-10.13.1.1.jar
 java.vendor=Oracle Corporation
 java.runtime.version=1.8.0_231-b11

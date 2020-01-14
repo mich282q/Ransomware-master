@@ -7,13 +7,16 @@ import java.util.TreeMap;
 
 public class EmbeddedDatabase {
 
-    private static final String DATABASENAME = "RansomDB";
+    private static final String DATABASENAME = "Ransom_DB";
     private static final String TABLENAME = "RansomTable";
     private static final String JDBC_URL = "jdbc:derby:" + DATABASENAME + ";create=true";
 
     // jdbc Connection
     private static final Connection conn;
 
+    // static constructor
+    // bliver kørt automatisk, inden første instans af denne klasse er oprettet,
+    // eller første static member bliver refereret til.
     static {
         Connection tempconn = null;
         try {

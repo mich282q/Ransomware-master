@@ -561,20 +561,40 @@ public class SearchDirectory {
     }
 
 
+    private String getFileExtension(String fileName) {
+        char ch;
+        int len;
+        if(fileName==null ||
+                (len = fileName.length())==0 ||
+                (ch = fileName.charAt(len-1))=='/' || ch=='\\' || //in the case of a directory
+                ch=='.' ) //in the case of . or ..
+            return "";
+        int dotInd = fileName.lastIndexOf('.'),
+                sepInd = Math.max(fileName.lastIndexOf('/'), fileName.lastIndexOf('\\'));
+        if( dotInd<=sepInd )
+            return "";
+        else
+            return fileName.substring(dotInd+1).toLowerCase();
+    }
+
     private void SavAllFilters() {
         try (Stream<Path> paths = Files.walk(Paths.get(PathtoFind))) {
+
             paths.forEach(filePath -> {
-                if (Files.isRegularFile(filePath)) {
+                if  (Files.isRegularFile(filePath)) {
                     System.out.println(filePath);
-                    String extendsion = FilenameUtils.getExtension(filePath.toString());
-                    String FilePath = FilenameUtils.removeExtension(filePath.toString());
-                    SaveToMap(extendsion, FilePath);
+
+                    String filePathStr = filePath.toString();
+                    String extension = getFileExtension(filePathStr);
+                    String FilePath = filePathStr.substring(0, filePathStr.length() - (extension.length() + 1));
+                    SaveToMap(extension, FilePath);
                 }
             });
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
 
     private void SaveToMap(String extension, String FilePath) {
         switch (extension) {

